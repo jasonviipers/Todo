@@ -30,10 +30,8 @@ Happy using.
 ## Authors
 
 - [@Jason Michel YT](https://www.github.com/jasonviipers)
+- [Chatr Professional SEO reports and tools ](https://chatr.fr/)
 
 ## Screenshots
 
 ![App Screenshot](https://user-images.githubusercontent.com/67412667/180463041-3a0eb043-f4a6-4105-839a-ef0e84a03f0d.png)
-
-
-[Chatr](https://chatr.fr/)
