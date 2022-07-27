@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.todo.R;
 import com.example.todo.ui.ActivityAbout;
+import com.example.todo.ui.LoginActivity;
 import com.example.todo.ui.logoutActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,8 +48,9 @@ import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
     private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
     private ImageView avatar;
-    private Button upload;
+    private Button upload, btnSignOut;
     private Uri imgUrl;
     public static final int CHOOSE_IMAGE = 1;
     private DatabaseReference databaseReference;
@@ -57,13 +59,14 @@ public class ProfileFragment extends Fragment {
     private TextView Name;
     private TextView Email;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.profile_layout, container, false);
         getActivity ().setTitle ("My Profile");
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance ();
+        firebaseAuth = FirebaseAuth.getInstance ();
         user = firebaseAuth.getCurrentUser ();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance ();
         databaseReference = firebaseDatabase.getReference ("Users");
@@ -75,10 +78,10 @@ public class ProfileFragment extends Fragment {
         TextView share = v.findViewById (R.id.shareAndSend);
         upload = v.findViewById (R.id.saveUpload);
 
+        btnSignOut=v.findViewById(R.id.btnSignOut);
+
         TextView sendFeedback = v.findViewById (R.id.sendFeedback);
         TextView aboutAppTv = v.findViewById (R.id.about);
-
-        Button logoutBtn = v.findViewById(R.id.btnSignOut);
 
         mStorageRef = FirebaseStorage.getInstance ().getReference ("uploads");
 
@@ -93,17 +96,24 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        aboutAppTv.setOnClickListener (v1 -> {
-            Intent intent = new Intent (this.getContext (), ActivityAbout.class);//start about app activity
-            startActivity (intent);
+                aboutAppTv.setOnClickListener(v1 -> {
+                    Intent intent = new Intent(this.getContext(), ActivityAbout.class);//start about app activity
+                    startActivity(intent);
 
-        });
+                });
 
         //SignOut
-        logoutBtn.setOnClickListener(v1->{
+        btnSignOut.setOnClickListener(v1 -> {
+            firebaseAuth.signOut();
+            Intent i = new Intent(this.getContext(), LoginActivity.class);
+            startActivity(i);
+        });
+
+     /*   btnSignOut.setOnClickListener(v1->{
             Intent intent = new Intent (this.getContext (), logoutActivity.class);
             startActivity(intent);
-        });
+        });*/
+
 
         //image click
         avatar.setOnClickListener (v13 -> {
